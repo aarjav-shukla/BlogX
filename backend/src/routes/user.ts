@@ -2,7 +2,6 @@ import { Hono } from "hono";
 import { PrismaClient } from "../../generated/prisma";
 import { withAccelerate } from "@prisma/extension-accelerate";
 import { sign } from "hono/jwt";
-import { verify } from "hono/jwt";
 import { signinInput, signupInput} from "@aarjav-shukla/medium-common";
 
 type Bindings = {
