@@ -18,22 +18,38 @@ export const blogRouter = new Hono<{
 }>();
 
 blogRouter.use('/*', async (c,next) => {
-const header=c.req.header("Authorization");
-if(!header){
-  return c.json({
-    error:"No tokens provided"
-  },401)
-};
-const response= await verify(header,c.env.JWT_SECRET,"HS256");
-if(typeof response.id==="string"){
-    c.set("userId",response.id)
-  await next()
-}
-else{
-  return c.json({
-    message:"unauthorised"
-  },403)
-}
+  if (c.req.method === 'GET') {
+    const header = c.req.header("Authorization");
+    if (header) {
+      try {
+        const response = await verify(header, c.env.JWT_SECRET, "HS256");
+        if (typeof response.id === "string") {
+          c.set("userId", response.id);
+        }
+      } catch (e) {
+        // Continue for GET requests even if token header is absent or expired
+      }
+    }
+    await next();
+    return;
+  }
+
+  const header = c.req.header("Authorization");
+  if(!header){
+    return c.json({
+      error:"No tokens provided"
+    },401)
+  };
+  const response = await verify(header,c.env.JWT_SECRET,"HS256");
+  if(typeof response.id === "string"){
+      c.set("userId",response.id)
+    await next()
+  }
+  else{
+    return c.json({
+      message:"unauthorised"
+    },403)
+  }
 })
 
 blogRouter.post('/',async(c)=>{

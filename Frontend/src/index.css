@@ -1,1 +1,81 @@
-@import "tailwindcss";  
+@import "tailwindcss";
+
+@layer utilities {
+  .font-playfair {
+    font-family: 'Playfair Display', Georgia, serif;
+  }
+  .font-newsreader {
+    font-family: 'Newsreader', Georgia, serif;
+  }
+  .font-cinzel {
+    font-family: 'Cinzel', serif;
+  }
+  .font-oswald {
+    font-family: 'Oswald', sans-serif;
+  }
+  .font-syne {
+    font-family: 'Syne', sans-serif;
+  }
+  .font-gothic {
+    font-family: 'UnifrakturMaguntia', cursive;
+  }
+  .font-sans {
+    font-family: 'Inter', system-ui, sans-serif;
+  }
+
+  /* Newspaper paper background texture */
+  .bg-newspaper {
+    background-color: #f4f0ea;
+    background-image: radial-gradient(#d3cbbe 0.75px, transparent 0.75px), radial-gradient(#d3cbbe 0.75px, #f4f0ea 0.75px);
+    background-size: 30px 30px;
+    background-position: 0 0, 15px 15px;
+  }
+
+  .dark .bg-newspaper {
+    background-color: #121212;
+    background-image: radial-gradient(#262626 0.75px, transparent 0.75px), radial-gradient(#262626 0.75px, #121212 0.75px);
+    background-size: 30px 30px;
+    background-position: 0 0, 15px 15px;
+  }
+
+  /* Editorial double line border */
+  .border-double-thick {
+    border-bottom: 4px double #292524;
+  }
+
+  .dark .border-double-thick {
+    border-bottom: 4px double #e7e5e4;
+  }
+
+  /* Image grayscale / editorial duo tone filter */
+  .editorial-img {
+    filter: grayscale(100%) contrast(110%);
+    transition: filter 0.4s ease, transform 0.4s ease;
+  }
+
+  .editorial-img:hover {
+    filter: grayscale(20%) contrast(105%);
+  }
+
+  /* Vertical writing mode for sidebar tags like in Tablet image */
+  .writing-vertical {
+    writing-mode: vertical-rl;
+    transform: rotate(180deg);
+  }
+}
+
+/* Custom scrollbars */
+::-webkit-scrollbar {
+  width: 6px;
+  height: 6px;
+}
+::-webkit-scrollbar-track {
+  background: transparent;
+}
+::-webkit-scrollbar-thumb {
+  background: #a8a29e;
+  border-radius: 3px;
+}
+.dark ::-webkit-scrollbar-thumb {
+  background: #44403c;
+}
