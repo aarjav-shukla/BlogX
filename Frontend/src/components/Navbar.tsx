@@ -1,5 +1,7 @@
 import React, { useState } from 'react';
-import { LayoutGrid, Newspaper, Search, PlusCircle, Sun, Moon, Radio, RefreshCw, CheckCircle2 } from 'lucide-react';
+import { Link } from 'react-router-dom';
+import { LayoutGrid, Newspaper, Search, PlusCircle, Sun, Moon, Radio, RefreshCw, CheckCircle2, User, LogIn, UserPlus, LogOut } from 'lucide-react';
+import { isAuthenticated, getUserEmail, removeToken } from '../config/api';
 
 interface NavbarProps {
   viewMode: 'gazette' | 'fyrre';
@@ -105,10 +107,50 @@ export const Navbar: React.FC<NavbarProps> = ({
           </div>
 
           {/* Right Action buttons */}
-          <div className="flex items-center gap-2">
+          <div className="flex items-center gap-2 font-mono text-xs">
+            {isAuthenticated() ? (
+              <>
+                <Link
+                  to="/profile"
+                  className="flex items-center gap-1 px-3 py-2 border border-stone-400 dark:border-stone-700 hover:bg-stone-200 dark:hover:bg-stone-800 text-stone-900 dark:text-stone-100 uppercase tracking-wider transition"
+                  title="View Author Profile"
+                >
+                  <User className="w-3.5 h-3.5 text-amber-600 dark:text-amber-400" />
+                  <span className="max-w-[100px] truncate">{getUserEmail()}</span>
+                </Link>
+                <button
+                  onClick={() => {
+                    removeToken();
+                    window.location.reload();
+                  }}
+                  className="p-2 text-stone-600 dark:text-stone-400 hover:text-red-600 dark:hover:text-red-400 transition cursor-pointer"
+                  title="Sign Out"
+                >
+                  <LogOut className="w-4 h-4" />
+                </button>
+              </>
+            ) : (
+              <>
+                <Link
+                  to="/signin"
+                  className="flex items-center gap-1 px-3 py-2 border border-stone-400 dark:border-stone-700 hover:bg-stone-200 dark:hover:bg-stone-800 text-stone-900 dark:text-stone-100 uppercase tracking-wider transition"
+                >
+                  <LogIn className="w-3.5 h-3.5" />
+                  <span>Sign In</span>
+                </Link>
+                <Link
+                  to="/signup"
+                  className="hidden sm:flex items-center gap-1 px-3 py-2 border border-stone-800 dark:border-stone-200 bg-stone-200 dark:bg-stone-800 text-stone-900 dark:text-stone-100 uppercase tracking-wider transition hover:bg-stone-300"
+                >
+                  <UserPlus className="w-3.5 h-3.5" />
+                  <span>Sign Up</span>
+                </Link>
+              </>
+            )}
+
             <button
               onClick={onOpenCreateModal}
-              className="flex items-center gap-1.5 bg-stone-900 hover:bg-stone-800 dark:bg-stone-100 dark:hover:bg-white text-stone-100 dark:text-stone-900 px-3.5 py-2 text-xs font-semibold uppercase tracking-wider transition border border-stone-800 shadow-sm cursor-pointer"
+              className="flex items-center gap-1.5 bg-stone-900 hover:bg-stone-800 dark:bg-stone-100 dark:hover:bg-white text-stone-100 dark:text-stone-900 px-3.5 py-2 text-xs font-semibold uppercase tracking-wider transition border border-stone-800 shadow-sm cursor-pointer ml-1"
             >
               <PlusCircle className="w-4 h-4" />
               <span>Write Post</span>

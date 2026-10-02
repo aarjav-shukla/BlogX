@@ -13,13 +13,12 @@ export const signinInput = z.object({
 });
 export type signinInput=z.infer<typeof signinInput>;
 export const createBlog = z.object({
-  title:z.string().min(1).max(20),
+  title: z.string().min(1).max(200),
   content: z.string().min(5),
 });
 export type createBlog=z.infer<typeof createBlog>;
 export const updateblog = z.object({
-  title:z.string().min(1).max(20),
+  title: z.string().min(1).max(200),
   content: z.string().min(5),
-
 });
 export type updateblog=z.infer<typeof updateblog>;
